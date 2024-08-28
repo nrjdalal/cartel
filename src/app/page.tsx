@@ -218,11 +218,11 @@ export default function Home() {
                   playableBlocks.find(
                     (playableBlock: { block: number }) =>
                       playableBlock.block === block,
-                  )?.owned === 0 && 'bg-blue-300',
+                  )?.owned === 0 && 'bg-red-300',
                   playableBlocks.find(
                     (playableBlock: { block: number }) =>
                       playableBlock.block === block,
-                  )?.owned === 1 && 'bg-red-300',
+                  )?.owned === 1 && 'bg-blue-300',
                 )}
               >
                 {playableBlocks.find(
