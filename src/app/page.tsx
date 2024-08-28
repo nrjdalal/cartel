@@ -179,12 +179,14 @@ export default function Home() {
     })
     if (dice !== 6) {
       setTurn((prev) => (prev === 0 ? 1 : 0))
+    } else {
+      toast('You rolled a 6, roll again!')
     }
   }
 
   return (
     <main className="flex min-h-svh select-none flex-col items-center justify-center bg-gray-50">
-      <Toaster />
+      <Toaster position="top-center" />
       <div className="relative flex aspect-[9/16] w-full flex-col items-center justify-center">
         <div className="absolute bottom-16 right-4 flex items-center justify-center">
           <button
