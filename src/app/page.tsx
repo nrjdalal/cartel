@@ -7,7 +7,7 @@ import { useState } from 'react'
 export default function Home() {
   const gridBlocks = Array.from({ length: 64 }, (_, i) => i)
 
-  const playableBlocks = [
+  const [playableBlocks, setPlayableBlocks] = useState([
     {
       id: 0,
       block: 0,
@@ -120,14 +120,16 @@ export default function Home() {
       id: 27,
       block: 8,
     },
-  ]
+  ])
 
   const [players, setPlayers] = useState([
     {
       position: 0,
+      wallet: 1500,
     },
     {
       position: 0,
+      wallet: 1500,
     },
   ])
 
@@ -135,7 +137,7 @@ export default function Home() {
   const [dice, setDice] = useState(0)
 
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center bg-gray-50">
+    <main className="flex min-h-svh select-none flex-col items-center justify-center bg-gray-50">
       <div className="relative flex aspect-[9/16] h-full w-full items-center justify-center">
         <div className="absolute bottom-4 right-4 flex items-center justify-center">
           <button
@@ -145,6 +147,7 @@ export default function Home() {
               setPlayers((prev) => {
                 const newPlayers = [...prev]
                 newPlayers[turn].position += dice
+
                 return newPlayers
               })
               setTurn((prev) => (prev === 0 ? 1 : 0))
