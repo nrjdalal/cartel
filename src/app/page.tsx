@@ -120,7 +120,7 @@ export default function Home() {
       id: 27,
       block: 8,
     },
-  ])
+  ]) as any
 
   const [players, setPlayers] = useState([
     {
@@ -145,12 +145,12 @@ export default function Home() {
       const currentIndex = newPlayers[turn].position % 28
       // check if current index block is owned
       const isOwned = playableBlocks.find(
-        (playableBlock) => playableBlock.id === currentIndex,
+        (playableBlock: { id: number }) => playableBlock.id === currentIndex,
       )?.owned
 
       if (!isOwned) {
         newPlayers[turn].wallet -= 100
-        setPlayableBlocks((prev) => {
+        setPlayableBlocks((prev: any) => {
           const newPlayableBlocks = [...prev]
           newPlayableBlocks[currentIndex].owned = turn
           return newPlayableBlocks
@@ -212,24 +212,29 @@ export default function Home() {
                 className={cn(
                   'grid aspect-square items-center justify-center',
                   playableBlocks.find(
-                    (playableBlock) => playableBlock.block === block,
+                    (playableBlock: { block: number }) =>
+                      playableBlock.block === block,
                   ) && 'bg-gray-300',
                   playableBlocks.find(
-                    (playableBlock) => playableBlock.block === block,
+                    (playableBlock: { block: number }) =>
+                      playableBlock.block === block,
                   )?.owned === 0 && 'bg-blue-300',
                   playableBlocks.find(
-                    (playableBlock) => playableBlock.block === block,
+                    (playableBlock: { block: number }) =>
+                      playableBlock.block === block,
                   )?.owned === 1 && 'bg-red-300',
                 )}
               >
                 {playableBlocks.find(
-                  (playableBlock) => playableBlock.block === block,
+                  (playableBlock: { block: number }) =>
+                    playableBlock.block === block,
                 )?.id ===
                   players[0].position % 28 && (
                   <div className="size-6 rounded-full bg-red-500"></div>
                 )}
                 {playableBlocks.find(
-                  (playableBlock) => playableBlock.block === block,
+                  (playableBlock: { block: number }) =>
+                    playableBlock.block === block,
                 )?.id ===
                   players[1].position % 28 && (
                   <div className="size-6 rounded-full bg-blue-500"></div>
