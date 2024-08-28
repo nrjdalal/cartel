@@ -150,7 +150,9 @@ export default function Home() {
 
                 return newPlayers
               })
-              setTurn((prev) => (prev === 0 ? 1 : 0))
+              if (dice !== 6) {
+                setTurn((prev) => (prev === 0 ? 1 : 0))
+              }
             }}
             className={cn(
               'flex size-12 items-center justify-center rounded-md bg-blue-500 p-2 text-white',
