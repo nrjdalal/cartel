@@ -122,8 +122,15 @@ export default function Home() {
     },
   ]
 
-  const [playerPosition, setPlayerPosition] = useState([0, 0])
-  const [amount, setAmount] = useState([1500, 1500])
+  const [players, setPlayers] = useState([
+    {
+      position: 0,
+    },
+    {
+      position: 0,
+    },
+  ])
+
   const [turn, setTurn] = useState(0)
   const [dice, setDice] = useState(0)
 
@@ -135,18 +142,17 @@ export default function Home() {
             onClick={() => {
               const dice = Math.floor(Math.random() * 6) + 1
               setDice(dice)
-              setPlayerPosition((prev) => {
-                const newPlayerPosition = [...prev]
-                newPlayerPosition[turn] += dice
-                return newPlayerPosition
+              setPlayers((prev) => {
+                const newPlayers = [...prev]
+                newPlayers[turn].position += dice
+                return newPlayers
               })
               setTurn((prev) => (prev === 0 ? 1 : 0))
             }}
             className={cn(
               'bg-blue-500 text-white rounded-md size-12 flex justify-center items-center p-2',
               turn === 0 && 'bg-blue-500',
-              turn === 1 && 'bg-red-500',
-              playerPosition[0] === 0 && 'bg-red-500'
+              turn === 1 && 'bg-red-500'
             )}
           >
             {dice === 1 && <Dice1 className="size-8" />}
@@ -173,14 +179,14 @@ export default function Home() {
                 {playableBlocks.find(
                   (playableBlock) => playableBlock.block === block
                 )?.id ===
-                  playerPosition[0] % 28 && (
+                  players[0].position % 28 && (
                   <div className="size-6 bg-red-500 rounded-full"></div>
                 )}
 
                 {playableBlocks.find(
                   (playableBlock) => playableBlock.block === block
                 )?.id ===
-                  playerPosition[1] % 28 && (
+                  players[1].position % 28 && (
                   <div className="size-6 bg-blue-500 rounded-full"></div>
                 )}
               </div>
