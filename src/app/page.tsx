@@ -1,113 +1,212 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
 
 export default function Home() {
+  const gridBlocks = Array.from({ length: 49 }, (_, i) => i)
+
+  const playableBlocks = [
+    {
+      id: 0,
+      block: 0,
+    },
+    {
+      id: 1,
+      block: 1,
+    },
+    {
+      id: 2,
+      block: 2,
+    },
+    {
+      id: 3,
+      block: 3,
+    },
+    {
+      id: 4,
+      block: 4,
+    },
+    {
+      id: 5,
+      block: 5,
+    },
+    {
+      id: 6,
+      block: 6,
+    },
+    {
+      id: 7,
+      block: 13,
+    },
+    {
+      id: 8,
+      block: 20,
+    },
+    {
+      id: 9,
+      block: 19,
+    },
+    {
+      id: 10,
+      block: 18,
+    },
+    {
+      id: 11,
+      block: 17,
+    },
+    {
+      id: 12,
+      block: 16,
+    },
+    {
+      id: 13,
+      block: 23,
+    },
+    {
+      id: 14,
+      block: 30,
+    },
+    {
+      id: 15,
+      block: 31,
+    },
+    {
+      id: 16,
+      block: 32,
+    },
+    {
+      id: 17,
+      block: 33,
+    },
+    {
+      id: 18,
+      block: 34,
+    },
+    {
+      id: 19,
+      block: 41,
+    },
+    {
+      id: 20,
+      block: 48,
+    },
+    {
+      id: 21,
+      block: 47,
+    },
+    {
+      id: 22,
+      block: 46,
+    },
+    {
+      id: 23,
+      block: 45,
+    },
+    {
+      id: 24,
+      block: 44,
+    },
+    {
+      id: 25,
+      block: 43,
+    },
+    {
+      id: 26,
+      block: 42,
+    },
+    {
+      id: 27,
+      block: 35,
+    },
+    {
+      id: 28,
+      block: 28,
+    },
+    {
+      id: 29,
+      block: 21,
+    },
+    {
+      id: 30,
+      block: 14,
+    },
+    {
+      id: 31,
+      block: 7,
+    },
+  ]
+
+  const [playerPosition, setPlayerPosition] = useState([0, 0])
+  const [turn, setTurn] = useState(0)
+  const [dice, setDice] = useState(0)
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="flex min-h-screen items-center justify-center flex-col bg-gray-50 ">
+      <div className="aspect-[9/16] h-full w-full">
+        <div className="grid grid-cols-7 gap-0.5">
+          {gridBlocks.map((block) => (
+            <div key={block}>
+              <div
+                className={`${
+                  playableBlocks.find(
+                    (playableBlock) => playableBlock.block === block
+                  )
+                    ? 'bg-green-500'
+                    : 'bg-gray-200'
+                } aspect-square items-center justify-center grid`}
+              >
+                {playableBlocks.find(
+                  (playableBlock) => playableBlock.block === block
+                )?.id ===
+                  playerPosition[0] % 32 && (
+                  <div className="size-6 bg-red-500 rounded-full"></div>
+                )}
+
+                {playableBlocks.find(
+                  (playableBlock) => playableBlock.block === block
+                )?.id ===
+                  playerPosition[1] % 32 && (
+                  <div className="size-6 bg-blue-500 rounded-full"></div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-4 text-black">
+          <button
+            onClick={() => {
+              const dice = Math.floor(Math.random() * 6) + 1
+              setDice(dice)
+              setPlayerPosition((prev) => {
+                const newPlayerPosition = [...prev]
+                newPlayerPosition[turn] += dice
+                return newPlayerPosition
+              })
+              setTurn((prev) => (prev === 0 ? 1 : 0))
+            }}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            Roll Dice
+          </button>
+          <div className="mt-4">
+            <h1 className="text-xl">Player 1 Position</h1>
+            <p>{playerPosition[0]}</p>
+          </div>
+          <div className="mt-4">
+            <h1 className="text-xl">Player 2 Position</h1>
+            <p>{playerPosition[1]}</p>
+          </div>
+          <div className="mt-4">
+            <h1 className="text-xl">Turn</h1>
+            <p>Player {turn + 1}</p>
+          </div>
+          <div className="mt-4">
+            <h1 className="text-xl">Dice</h1>
+            <p>{dice ? 'Unrolled' : dice}</p>
+          </div>
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
-  );
+  )
 }
