@@ -183,7 +183,7 @@ export default function Home() {
 
       newPlayers[turn].position = nextIndex
 
-      toast(addToToaster.join('\n'))
+      addToToaster.length && toast(addToToaster.join('\n'))
 
       return newPlayers
     })
