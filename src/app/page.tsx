@@ -148,7 +148,7 @@ export default function Home() {
         (playableBlock: { id: number }) => playableBlock.id === currentIndex,
       )?.owned
 
-      if (!isOwned) {
+      if (isOwned === undefined) {
         newPlayers[turn].wallet -= 100
         setPlayableBlocks((prev: any) => {
           const newPlayableBlocks = [...prev]
