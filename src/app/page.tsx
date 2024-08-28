@@ -157,14 +157,14 @@ export default function Home() {
           newPlayableBlocks[nextIndex].owned = turn
           return newPlayableBlocks
         })
-        toast(`${turn ? 'Red' : 'Blue'} bought the block`)
+        toast(`${turn ? 'Blue' : 'Red'} bought the block`)
       }
 
       if (isOwned !== undefined && isOwned !== turn) {
         newPlayers[turn].wallet -= 50
         newPlayers[isOwned].wallet += 50
         toast(
-          `${turn ? 'Red' : 'Blue'} paid $50 to the other player ${!turn ? 'Red' : 'Blue'}`,
+          `${turn ? 'Blue' : 'Red'} paid $50 to the other player ${!turn ? 'Blue' : 'Red'}`,
         )
       }
 
