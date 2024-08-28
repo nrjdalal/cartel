@@ -142,6 +142,26 @@ export default function Home() {
     setPlayers((prev) => {
       const newPlayers = [...prev]
       newPlayers[turn].position += dice
+      const currentIndex = newPlayers[turn].position % 28
+      // check if current index block is owned
+      const isOwned = playableBlocks.find(
+        (playableBlock) => playableBlock.id === currentIndex,
+      )?.owned
+
+      if (!isOwned) {
+        newPlayers[turn].wallet -= 100
+        setPlayableBlocks((prev) => {
+          const newPlayableBlocks = [...prev]
+          newPlayableBlocks[currentIndex].owned = turn
+          return newPlayableBlocks
+        })
+      }
+
+      if (isOwned && isOwned !== turn) {
+        newPlayers[turn].wallet -= 50
+        newPlayers[isOwned].wallet += 50
+      }
+
       return newPlayers
     })
     if (dice !== 6) {
@@ -151,8 +171,8 @@ export default function Home() {
 
   return (
     <main className="flex min-h-svh select-none flex-col items-center justify-center bg-gray-50">
-      <div className="relative flex aspect-[9/16] h-full w-full items-center justify-center">
-        <div className="absolute bottom-4 right-4 flex items-center justify-center">
+      <div className="relative flex aspect-[9/16] w-full items-center justify-center">
+        <div className="absolute bottom-16 right-4 flex items-center justify-center">
           <button
             onClick={() => {
               OnRoll()
@@ -176,13 +196,18 @@ export default function Home() {
           {gridBlocks.map((block) => (
             <div key={block}>
               <div
-                className={`${
+                className={cn(
+                  'grid aspect-square items-center justify-center',
                   playableBlocks.find(
                     (playableBlock) => playableBlock.block === block,
-                  )
-                    ? 'bg-green-500'
-                    : 'bg-gray-200'
-                } grid aspect-square items-center justify-center`}
+                  ) && 'bg-gray-300',
+                  playableBlocks.find(
+                    (playableBlock) => playableBlock.block === block,
+                  )?.owned === 0 && 'bg-blue-300',
+                  playableBlocks.find(
+                    (playableBlock) => playableBlock.block === block,
+                  )?.owned === 1 && 'bg-red-300',
+                )}
               >
                 {playableBlocks.find(
                   (playableBlock) => playableBlock.block === block,
