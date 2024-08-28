@@ -150,6 +150,8 @@ export default function Home() {
         (playableBlock: { id: number }) => playableBlock.id === nextIndex,
       )?.owned
 
+      const addToToaster = []
+
       if (isOwned === undefined) {
         newPlayers[turn].wallet -= 100
         setPlayableBlocks((prev: any) => {
@@ -157,31 +159,34 @@ export default function Home() {
           newPlayableBlocks[nextIndex].owned = turn
           return newPlayableBlocks
         })
-        toast(`${turn ? 'Blue' : 'Red'} bought the block`)
+        addToToaster.push(`${turn ? 'Blue' : 'Red'} bought the property`)
       }
 
       if (isOwned !== undefined && isOwned !== turn) {
         newPlayers[turn].wallet -= 50
         newPlayers[isOwned].wallet += 50
-        toast(
+        addToToaster.push(
           `${turn ? 'Blue' : 'Red'} paid $50 to the other player ${!turn ? 'Blue' : 'Red'}`,
         )
       }
 
       if (nextIndex < lastIndex) {
         newPlayers[turn].wallet += 200
-        toast('You passed go, collect $200')
+        addToToaster.push('You passed go, collect $200')
+      }
+
+      if (dice !== 6) {
+        setTurn((prev) => (prev === 0 ? 1 : 0))
+      } else {
+        addToToaster.push('You rolled a 6, roll again!')
       }
 
       newPlayers[turn].position = nextIndex
 
+      toast(addToToaster.join('\n'))
+
       return newPlayers
     })
-    if (dice !== 6) {
-      setTurn((prev) => (prev === 0 ? 1 : 0))
-    } else {
-      toast('You rolled a 6, roll again!')
-    }
   }
 
   return (
