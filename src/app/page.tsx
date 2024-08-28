@@ -153,7 +153,7 @@ export default function Home() {
 
       if (nextIndex < lastIndex) {
         newPlayers[turn].wallet += 200
-        lastTransaction = 200
+        lastTransaction += 200
         addToToaster.push('You passed go, collect $200.')
       }
 
@@ -163,7 +163,7 @@ export default function Home() {
 
       if (isOwned === undefined) {
         newPlayers[turn].wallet -= 100
-        lastTransaction = -100
+        lastTransaction -= 100
         setPlayableBlocks((prev: any) => {
           const newPlayableBlocks = [...prev]
           newPlayableBlocks[nextIndex].owned = turn
@@ -174,7 +174,7 @@ export default function Home() {
 
       if (isOwned !== undefined && isOwned !== turn) {
         newPlayers[turn].wallet -= 50
-        lastTransaction = -50
+        lastTransaction -= 50
         newPlayers[isOwned].wallet += 50
         newPlayers[isOwned].lastTransaction = 50
         addToToaster.push(
