@@ -127,10 +127,12 @@ export default function Home() {
     {
       position: 0,
       wallet: 1500,
+      lastTransaction: 0,
     },
     {
       position: 0,
       wallet: 1500,
+      lastTransaction: 0,
     },
   ])
 
@@ -142,6 +144,7 @@ export default function Home() {
     setDice(dice)
     setPlayers((prev) => {
       const addToToaster = []
+      let lastTransaction = 0
 
       const newPlayers = [...prev]
 
@@ -150,6 +153,7 @@ export default function Home() {
 
       if (nextIndex < lastIndex) {
         newPlayers[turn].wallet += 200
+        lastTransaction = 200
         addToToaster.push('You passed go, collect $200.')
       }
 
@@ -159,6 +163,7 @@ export default function Home() {
 
       if (isOwned === undefined) {
         newPlayers[turn].wallet -= 100
+        lastTransaction = -100
         setPlayableBlocks((prev: any) => {
           const newPlayableBlocks = [...prev]
           newPlayableBlocks[nextIndex].owned = turn
@@ -169,7 +174,9 @@ export default function Home() {
 
       if (isOwned !== undefined && isOwned !== turn) {
         newPlayers[turn].wallet -= 50
+        lastTransaction = -50
         newPlayers[isOwned].wallet += 50
+        newPlayers[isOwned].lastTransaction = 50
         addToToaster.push(
           `${turn ? 'Blue' : 'Red'} paid $50 to player ${!turn ? 'Blue' : 'Red'}.`,
         )
@@ -180,6 +187,7 @@ export default function Home() {
       }
 
       newPlayers[turn].position = nextIndex
+      newPlayers[turn].lastTransaction = lastTransaction
 
       addToToaster.length && toast(addToToaster.join('\n'))
 
@@ -219,7 +227,11 @@ export default function Home() {
           <div className="flex items-center justify-center gap-6 p-6">
             <div className="flex items-center justify-center gap-2">
               <div className="size-6 rounded-full bg-red-500"></div>
-              <div className="text-red-500">${players[0].wallet}</div>
+              <div className="text-red-500">
+                ${players[0].wallet}
+                {!!players[0].lastTransaction &&
+                  `(${players[0].lastTransaction})`}
+              </div>
             </div>
             <div className="flex items-center justify-center gap-2">
               <div className="size-6 rounded-full bg-blue-500"></div>
