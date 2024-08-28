@@ -144,8 +144,8 @@ export default function Home() {
             }}
             className={cn(
               'bg-blue-500 text-white rounded-md size-12 flex justify-center items-center p-2',
-              turn === 0 && 'bg-red-500',
-              turn === 1 && 'bg-blue-500'
+              turn === 0 && 'bg-blue-500',
+              turn === 1 && 'bg-red-500'
             )}
           >
             {dice === 1 && <Dice1 className="size-8" />}
