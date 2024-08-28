@@ -136,23 +136,26 @@ export default function Home() {
   const [turn, setTurn] = useState(0)
   const [dice, setDice] = useState(0)
 
+  const OnRoll = () => {
+    const dice = Math.floor(Math.random() * 6) + 1
+    setDice(dice)
+    setPlayers((prev) => {
+      const newPlayers = [...prev]
+      newPlayers[turn].position += dice
+      return newPlayers
+    })
+    if (dice !== 6) {
+      setTurn((prev) => (prev === 0 ? 1 : 0))
+    }
+  }
+
   return (
     <main className="flex min-h-svh select-none flex-col items-center justify-center bg-gray-50">
       <div className="relative flex aspect-[9/16] h-full w-full items-center justify-center">
         <div className="absolute bottom-4 right-4 flex items-center justify-center">
           <button
             onClick={() => {
-              const dice = Math.floor(Math.random() * 6) + 1
-              setDice(dice)
-              setPlayers((prev) => {
-                const newPlayers = [...prev]
-                newPlayers[turn].position += dice
-
-                return newPlayers
-              })
-              if (dice !== 6) {
-                setTurn((prev) => (prev === 0 ? 1 : 0))
-              }
+              OnRoll()
             }}
             className={cn(
               'flex size-12 items-center justify-center rounded-md bg-blue-500 p-2 text-white',
