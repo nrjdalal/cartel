@@ -157,7 +157,7 @@ export default function Home() {
         })
       }
 
-      if (isOwned && isOwned !== turn) {
+      if (isOwned !== undefined && isOwned !== turn) {
         newPlayers[turn].wallet -= 50
         newPlayers[isOwned].wallet += 50
       }
