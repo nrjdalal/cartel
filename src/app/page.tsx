@@ -141,18 +141,19 @@ export default function Home() {
     setDice(dice)
     setPlayers((prev) => {
       const newPlayers = [...prev]
-      newPlayers[turn].position += dice
-      const currentIndex = newPlayers[turn].position % 28
+
+      const lastIndex = prev[turn].position % 28
+      const nextIndex = (lastIndex + dice) % 28
 
       const isOwned = playableBlocks.find(
-        (playableBlock: { id: number }) => playableBlock.id === currentIndex,
+        (playableBlock: { id: number }) => playableBlock.id === nextIndex,
       )?.owned
 
       if (isOwned === undefined) {
         newPlayers[turn].wallet -= 100
         setPlayableBlocks((prev: any) => {
           const newPlayableBlocks = [...prev]
-          newPlayableBlocks[currentIndex].owned = turn
+          newPlayableBlocks[nextIndex].owned = turn
           return newPlayableBlocks
         })
       }
@@ -162,10 +163,11 @@ export default function Home() {
         newPlayers[isOwned].wallet += 50
       }
 
-      // if player comes back to start or pass start add 200
-      if (newPlayers[turn].position >= 28) {
+      if (nextIndex < lastIndex) {
         newPlayers[turn].wallet += 200
       }
+
+      newPlayers[turn].position = nextIndex
 
       return newPlayers
     })
