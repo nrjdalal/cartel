@@ -171,7 +171,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-svh select-none flex-col items-center justify-center bg-gray-50">
-      <div className="relative flex aspect-[9/16] w-full items-center justify-center">
+      <div className="relative flex aspect-[9/16] w-full flex-col items-center justify-center">
         <div className="absolute bottom-16 right-4 flex items-center justify-center">
           <button
             onClick={() => {
@@ -190,6 +190,19 @@ export default function Home() {
             {dice === 5 && <Dice5 className="size-8" />}
             {dice === 6 && <Dice6 className="size-8" />}
           </button>
+        </div>
+
+        <div>
+          <div className="flex items-center justify-center gap-6 p-6">
+            <div className="flex items-center justify-center gap-2">
+              <div className="size-6 rounded-full bg-red-500"></div>
+              <div className="text-red-500">{players[0].wallet}</div>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="size-6 rounded-full bg-blue-500"></div>
+              <div className="text-blue-500">{players[1].wallet}</div>
+            </div>
+          </div>
         </div>
 
         <div className="grid w-full grid-cols-8 gap-0.5">
@@ -215,7 +228,6 @@ export default function Home() {
                   players[0].position % 28 && (
                   <div className="size-6 rounded-full bg-red-500"></div>
                 )}
-
                 {playableBlocks.find(
                   (playableBlock) => playableBlock.block === block,
                 )?.id ===
