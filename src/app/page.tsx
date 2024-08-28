@@ -128,7 +128,7 @@ export default function Home() {
   const [dice, setDice] = useState(0)
 
   return (
-    <main className="flex min-h-dvh items-center justify-center flex-col bg-gray-50 ">
+    <main className="flex min-h-svh items-center justify-center flex-col bg-gray-50">
       <div className="aspect-[9/16] h-full w-full flex items-center justify-center relative">
         <div className="absolute right-4 bottom-4 flex items-center justify-center">
           <button
