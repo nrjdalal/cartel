@@ -58,7 +58,7 @@ export default function Home() {
     {
       id: 7,
       block: 7,
-      name: 'Chance',
+      name: 'Jail',
     },
     {
       id: 8,
@@ -104,7 +104,7 @@ export default function Home() {
     {
       id: 14,
       block: 63,
-      name: 'Jail',
+      name: 'Chance',
     },
     {
       id: 15,
@@ -432,19 +432,11 @@ export default function Home() {
 
               <div
                 className={cn(
-                  'grid aspect-square items-center justify-center',
+                  'flex aspect-square items-center justify-center gap-1',
                   playableBlocks.find(
                     (playableBlock: { block: number }) =>
                       playableBlock.block === block,
                   ) && 'bg-gray-300',
-                  playableBlocks.find(
-                    (playableBlock: { block: number }) =>
-                      playableBlock.block === block,
-                  )?.owned === 0 && 'bg-red-300',
-                  playableBlocks.find(
-                    (playableBlock: { block: number }) =>
-                      playableBlock.block === block,
-                  )?.owned === 1 && 'bg-blue-300',
                 )}
               >
                 {playableBlocks.find(
@@ -452,14 +444,14 @@ export default function Home() {
                     playableBlock.block === block,
                 )?.id ===
                   players[0].position % 28 && (
-                  <div className="z-10 size-6 rounded-full bg-red-500"></div>
+                  <div className="z-10 mt-4 size-6 rounded-full border-2 bg-red-500"></div>
                 )}
                 {playableBlocks.find(
                   (playableBlock: { block: number }) =>
                     playableBlock.block === block,
                 )?.id ===
                   players[1].position % 28 && (
-                  <div className="z-10 size-6 rounded-full bg-blue-500"></div>
+                  <div className="z-10 mt-4 size-6 rounded-full border-2 bg-blue-500"></div>
                 )}
               </div>
             </div>
