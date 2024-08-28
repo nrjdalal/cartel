@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { Dice1, Dice2, Dice3, Dice4, Dice5, Dice6 } from 'lucide-react'
 import { useState } from 'react'
+import { toast, Toaster } from 'sonner'
 
 export default function Home() {
   const gridBlocks = Array.from({ length: 64 }, (_, i) => i)
@@ -156,15 +157,20 @@ export default function Home() {
           newPlayableBlocks[nextIndex].owned = turn
           return newPlayableBlocks
         })
+        toast(`${turn ? 'Red' : 'Blue'} bought the block`)
       }
 
       if (isOwned !== undefined && isOwned !== turn) {
         newPlayers[turn].wallet -= 50
         newPlayers[isOwned].wallet += 50
+        toast(
+          `${turn ? 'Red' : 'Blue'} paid $50 to the other player ${!turn ? 'Red' : 'Blue'}`,
+        )
       }
 
       if (nextIndex < lastIndex) {
         newPlayers[turn].wallet += 200
+        toast('You passed go, collect $200')
       }
 
       newPlayers[turn].position = nextIndex
@@ -178,6 +184,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-svh select-none flex-col items-center justify-center bg-gray-50">
+      <Toaster />
       <div className="relative flex aspect-[9/16] w-full flex-col items-center justify-center">
         <div className="absolute bottom-16 right-4 flex items-center justify-center">
           <button
