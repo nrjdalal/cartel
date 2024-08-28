@@ -143,7 +143,7 @@ export default function Home() {
       const newPlayers = [...prev]
       newPlayers[turn].position += dice
       const currentIndex = newPlayers[turn].position % 28
-      // check if current index block is owned
+
       const isOwned = playableBlocks.find(
         (playableBlock: { id: number }) => playableBlock.id === currentIndex,
       )?.owned
@@ -162,8 +162,8 @@ export default function Home() {
         newPlayers[isOwned].wallet += 50
       }
 
-      if (newPlayers[turn].position > 28) {
-        newPlayers[turn].position -= 28
+      // if player comes back to start or pass start add 200
+      if (newPlayers[turn].position >= 28) {
         newPlayers[turn].wallet += 200
       }
 
