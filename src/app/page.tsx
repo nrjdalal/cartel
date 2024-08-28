@@ -1,9 +1,11 @@
 'use client'
 
+import { cn } from '@/lib/utils'
+import { Dice1, Dice2, Dice3, Dice4, Dice5, Dice6 } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Home() {
-  const gridBlocks = Array.from({ length: 49 }, (_, i) => i)
+  const gridBlocks = Array.from({ length: 64 }, (_, i) => i)
 
   const playableBlocks = [
     {
@@ -36,114 +38,126 @@ export default function Home() {
     },
     {
       id: 7,
-      block: 13,
+      block: 7,
     },
     {
       id: 8,
-      block: 20,
+      block: 15,
     },
     {
       id: 9,
-      block: 19,
-    },
-    {
-      id: 10,
-      block: 18,
-    },
-    {
-      id: 11,
-      block: 17,
-    },
-    {
-      id: 12,
-      block: 16,
-    },
-    {
-      id: 13,
       block: 23,
     },
     {
-      id: 14,
-      block: 30,
-    },
-    {
-      id: 15,
+      id: 10,
       block: 31,
     },
     {
-      id: 16,
-      block: 32,
+      id: 11,
+      block: 39,
     },
     {
-      id: 17,
-      block: 33,
-    },
-    {
-      id: 18,
-      block: 34,
-    },
-    {
-      id: 19,
-      block: 41,
-    },
-    {
-      id: 20,
-      block: 48,
-    },
-    {
-      id: 21,
+      id: 12,
       block: 47,
     },
     {
+      id: 13,
+      block: 55,
+    },
+    {
+      id: 14,
+      block: 63,
+    },
+    {
+      id: 15,
+      block: 62,
+    },
+    {
+      id: 16,
+      block: 61,
+    },
+    {
+      id: 17,
+      block: 60,
+    },
+    {
+      id: 18,
+      block: 59,
+    },
+    {
+      id: 19,
+      block: 58,
+    },
+    {
+      id: 20,
+      block: 57,
+    },
+    {
+      id: 21,
+      block: 56,
+    },
+    {
       id: 22,
-      block: 46,
+      block: 48,
     },
     {
       id: 23,
-      block: 45,
+      block: 40,
     },
     {
       id: 24,
-      block: 44,
+      block: 32,
     },
     {
       id: 25,
-      block: 43,
+      block: 24,
     },
     {
       id: 26,
-      block: 42,
+      block: 16,
     },
     {
       id: 27,
-      block: 35,
-    },
-    {
-      id: 28,
-      block: 28,
-    },
-    {
-      id: 29,
-      block: 21,
-    },
-    {
-      id: 30,
-      block: 14,
-    },
-    {
-      id: 31,
-      block: 7,
+      block: 8,
     },
   ]
 
   const [playerPosition, setPlayerPosition] = useState([0, 0])
+  const [amount, setAmount] = useState([1500, 1500])
   const [turn, setTurn] = useState(0)
   const [dice, setDice] = useState(0)
 
   return (
     <main className="flex min-h-screen items-center justify-center flex-col bg-gray-50 ">
-      <div className="aspect-[9/16] h-full w-full">
-        <div className="grid grid-cols-7 gap-0.5">
+      <div className="aspect-[9/16] h-full w-full flex items-center justify-center relative">
+        <div className="absolute right-4 bottom-4 flex items-center justify-center">
+          <button
+            onClick={() => {
+              const dice = Math.floor(Math.random() * 6) + 1
+              setDice(dice)
+              setPlayerPosition((prev) => {
+                const newPlayerPosition = [...prev]
+                newPlayerPosition[turn] += dice
+                return newPlayerPosition
+              })
+              setTurn((prev) => (prev === 0 ? 1 : 0))
+            }}
+            className={cn(
+              'bg-blue-500 text-white rounded-md size-12 flex justify-center items-center p-2',
+              turn === 0 && 'bg-red-500',
+              turn === 1 && 'bg-blue-500'
+            )}
+          >
+            {dice === 1 && <Dice1 className="size-8" />}
+            {dice === 2 && <Dice2 className="size-8" />}
+            {dice === 3 && <Dice3 className="size-8" />}
+            {dice === 4 && <Dice4 className="size-8" />}
+            {dice === 5 && <Dice5 className="size-8" />}
+            {dice === 6 && <Dice6 className="size-8" />}
+          </button>
+        </div>
+
+        <div className="grid grid-cols-8 gap-0.5 w-full">
           {gridBlocks.map((block) => (
             <div key={block}>
               <div
@@ -158,53 +172,19 @@ export default function Home() {
                 {playableBlocks.find(
                   (playableBlock) => playableBlock.block === block
                 )?.id ===
-                  playerPosition[0] % 32 && (
+                  playerPosition[0] % 28 && (
                   <div className="size-6 bg-red-500 rounded-full"></div>
                 )}
 
                 {playableBlocks.find(
                   (playableBlock) => playableBlock.block === block
                 )?.id ===
-                  playerPosition[1] % 32 && (
+                  playerPosition[1] % 28 && (
                   <div className="size-6 bg-blue-500 rounded-full"></div>
                 )}
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="p-4 text-black">
-          <button
-            onClick={() => {
-              const dice = Math.floor(Math.random() * 6) + 1
-              setDice(dice)
-              setPlayerPosition((prev) => {
-                const newPlayerPosition = [...prev]
-                newPlayerPosition[turn] += dice
-                return newPlayerPosition
-              })
-              setTurn((prev) => (prev === 0 ? 1 : 0))
-            }}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Roll Dice
-          </button>
-          <div className="mt-4">
-            <h1 className="text-xl">Player 1 Position</h1>
-            <p>{playerPosition[0]}</p>
-          </div>
-          <div className="mt-4">
-            <h1 className="text-xl">Player 2 Position</h1>
-            <p>{playerPosition[1]}</p>
-          </div>
-          <div className="mt-4">
-            <h1 className="text-xl">Turn</h1>
-            <p>Player {turn + 1}</p>
-          </div>
-          <div className="mt-4">
-            <h1 className="text-xl">Dice</h1>
-            <p>{dice ? 'Unrolled' : dice}</p>
-          </div>
         </div>
       </div>
     </main>
