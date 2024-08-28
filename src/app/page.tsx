@@ -175,9 +175,7 @@ export default function Home() {
         )
       }
 
-      if (dice !== 6) {
-        setTurn((prev) => (prev === 0 ? 1 : 0))
-      } else {
+      if (dice === 6) {
         addToToaster.push('You rolled a 6, roll again!')
       }
 
@@ -187,6 +185,10 @@ export default function Home() {
 
       return newPlayers
     })
+
+    if (dice !== 6) {
+      setTurn((prev) => (prev === 0 ? 1 : 0))
+    }
   }
 
   return (
