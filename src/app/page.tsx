@@ -162,6 +162,11 @@ export default function Home() {
         newPlayers[isOwned].wallet += 50
       }
 
+      if (newPlayers[turn].position > 28) {
+        newPlayers[turn].position -= 28
+        newPlayers[turn].wallet += 200
+      }
+
       return newPlayers
     })
     if (dice !== 6) {
