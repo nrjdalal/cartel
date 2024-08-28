@@ -249,7 +249,7 @@ export default function Home() {
                 {!!players[1].lastTransaction && (
                   <span
                     className={cn(
-                      players[0].lastTransaction > 0
+                      players[1].lastTransaction > 0
                         ? 'text-green-500'
                         : 'text-red-500',
                     )}
