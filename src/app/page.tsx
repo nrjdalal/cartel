@@ -141,16 +141,21 @@ export default function Home() {
     const dice = Math.floor(Math.random() * 6) + 1
     setDice(dice)
     setPlayers((prev) => {
+      const addToToaster = []
+
       const newPlayers = [...prev]
 
       const lastIndex = prev[turn].position % 28
       const nextIndex = (lastIndex + dice) % 28
 
+      if (nextIndex < lastIndex) {
+        newPlayers[turn].wallet += 200
+        addToToaster.push('You passed go, collect $200.')
+      }
+
       const isOwned = playableBlocks.find(
         (playableBlock: { id: number }) => playableBlock.id === nextIndex,
       )?.owned
-
-      const addToToaster = []
 
       if (isOwned === undefined) {
         newPlayers[turn].wallet -= 100
@@ -168,11 +173,6 @@ export default function Home() {
         addToToaster.push(
           `${turn ? 'Blue' : 'Red'} paid $50 to the other player ${!turn ? 'Blue' : 'Red'}.`,
         )
-      }
-
-      if (nextIndex < lastIndex) {
-        newPlayers[turn].wallet += 200
-        addToToaster.push('You passed go, collect $200.')
       }
 
       if (dice !== 6) {
