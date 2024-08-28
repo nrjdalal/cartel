@@ -228,14 +228,18 @@ export default function Home() {
             <div className="flex items-center justify-center gap-2">
               <div className="size-6 rounded-full bg-red-500"></div>
               <div className="text-red-500">
-                ${players[0].wallet}
+                ${players[0].wallet}{' '}
                 {!!players[0].lastTransaction &&
                   `(${players[0].lastTransaction})`}
               </div>
             </div>
             <div className="flex items-center justify-center gap-2">
               <div className="size-6 rounded-full bg-blue-500"></div>
-              <div className="text-blue-500">${players[1].wallet}</div>
+              <div className="text-blue-500">
+                ${players[1].wallet}{' '}
+                {!!players[1].lastTransaction &&
+                  `(${players[1].lastTransaction})`}
+              </div>
             </div>
           </div>
         </div>
