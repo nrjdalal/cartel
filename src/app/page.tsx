@@ -169,7 +169,7 @@ export default function Home() {
           newPlayableBlocks[nextIndex].owned = turn
           return newPlayableBlocks
         })
-        addToToaster.push(`${turn ? 'Blue' : 'Red'} bought the property.`)
+        addToToaster.push(`${turn ? 'Blue' : 'Red'} bought a property.`)
       }
 
       if (isOwned !== undefined && isOwned !== turn) {
