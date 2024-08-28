@@ -171,7 +171,7 @@ export default function Home() {
         newPlayers[turn].wallet -= 50
         newPlayers[isOwned].wallet += 50
         addToToaster.push(
-          `${turn ? 'Blue' : 'Red'} paid $50 to the other player ${!turn ? 'Blue' : 'Red'}.`,
+          `${turn ? 'Blue' : 'Red'} paid $50 to player ${!turn ? 'Blue' : 'Red'}.`,
         )
       }
 
