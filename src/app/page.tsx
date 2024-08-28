@@ -135,9 +135,9 @@ export default function Home() {
   const [dice, setDice] = useState(0)
 
   return (
-    <main className="flex min-h-svh items-center justify-center flex-col bg-gray-50">
-      <div className="aspect-[9/16] h-full w-full flex items-center justify-center relative">
-        <div className="absolute right-4 bottom-4 flex items-center justify-center">
+    <main className="flex min-h-svh flex-col items-center justify-center bg-gray-50">
+      <div className="relative flex aspect-[9/16] h-full w-full items-center justify-center">
+        <div className="absolute bottom-4 right-4 flex items-center justify-center">
           <button
             onClick={() => {
               const dice = Math.floor(Math.random() * 6) + 1
@@ -150,9 +150,9 @@ export default function Home() {
               setTurn((prev) => (prev === 0 ? 1 : 0))
             }}
             className={cn(
-              'bg-blue-500 text-white rounded-md size-12 flex justify-center items-center p-2',
+              'flex size-12 items-center justify-center rounded-md bg-blue-500 p-2 text-white',
               turn === 0 && 'bg-blue-500',
-              turn === 1 && 'bg-red-500'
+              turn === 1 && 'bg-red-500',
             )}
           >
             {dice === 1 && <Dice1 className="size-8" />}
@@ -164,30 +164,30 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="grid grid-cols-8 gap-0.5 w-full">
+        <div className="grid w-full grid-cols-8 gap-0.5">
           {gridBlocks.map((block) => (
             <div key={block}>
               <div
                 className={`${
                   playableBlocks.find(
-                    (playableBlock) => playableBlock.block === block
+                    (playableBlock) => playableBlock.block === block,
                   )
                     ? 'bg-green-500'
                     : 'bg-gray-200'
-                } aspect-square items-center justify-center grid`}
+                } grid aspect-square items-center justify-center`}
               >
                 {playableBlocks.find(
-                  (playableBlock) => playableBlock.block === block
+                  (playableBlock) => playableBlock.block === block,
                 )?.id ===
                   players[0].position % 28 && (
-                  <div className="size-6 bg-red-500 rounded-full"></div>
+                  <div className="size-6 rounded-full bg-red-500"></div>
                 )}
 
                 {playableBlocks.find(
-                  (playableBlock) => playableBlock.block === block
+                  (playableBlock) => playableBlock.block === block,
                 )?.id ===
                   players[1].position % 28 && (
-                  <div className="size-6 bg-blue-500 rounded-full"></div>
+                  <div className="size-6 rounded-full bg-blue-500"></div>
                 )}
               </div>
             </div>
